@@ -2,7 +2,7 @@ package com.mycompany.projectclasses;
 import javax.swing.JOptionPane;
 
 public class Votacao2021 {
-    public void main(String args[])
+    public static void main(String args[])
     {
     int escolha = 0;
     Votacao[] votacao = new Votacao[10];
@@ -19,8 +19,7 @@ public class Votacao2021 {
 |      9 – Finalizar                                            |
 ----------------------------------------------------------------
                                                                """));
-        }while(escolha != 9);
-    switch(escolha)
+            switch(escolha)
         {
         case 1:
             votacao = metodo_votacao.FCadastrarVotos(votacao);
@@ -28,6 +27,10 @@ public class Votacao2021 {
             break;
         case 2:
             votacao = metodo_votacao.FClassificarsecao(votacao);
+            for(int i = 0; i< votacao.length;i++)
+                {
+                System.out.println(votacao[i].numerosecao +" "+votacao[i].numerocanditato);
+                }
             JOptionPane.showMessageDialog(null, "votos classificados");
             break;
         case 3:
@@ -39,13 +42,15 @@ public class Votacao2021 {
         case 9:
             JOptionPane.showMessageDialog(null, "Fechando programada");
             break;
-        default:
-            JOptionPane.showMessageDialog(null,"Valor Invalido\nInsira um outro valor");
-            break;
-        }
+            default:
+                JOptionPane.showMessageDialog(null,"Valor Invalido\nInsira um outro valor");
+                break;
+            }
+        }while(escolha != 9);
+
     }
     
-    public void MenuIndicadores(Votacao[] vt)
+    public static void MenuIndicadores(Votacao[] vt)
     {
         int escolha = 0;
         do
@@ -59,28 +64,46 @@ public class Votacao2021 {
             |      2 – Seção com Maior e Menor número de Eleitores          |
             |      3 – Quantidade de votos por canditato                    |
             |      4 – 10 primeiros colocadas                               |
-            |      9 – Finalizar                                            |
+            |      9 – Voltar para menu principal                           |
             ----------------------------------------------------------------
+                                                                   
                                                                            """));
-        }while(escolha != 9);
-        switch(escolha)
-        {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 9:
-                break;
-            default:
-                break;
-        }
+            switch(escolha)
+            {
+                case 1:
+                    PIndicadoresQtdSecao();
+                    break;
+                case 2:
+                    PIndicadoresSecaoMaiorMenor();
+                    break;
+                case 3:
+                    PIndicadoresQtdCandidato();
+                    break;
+                case 4:
+                    PIndicadoresRanque();
+                    break;
+                case 9:
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Voltando");
+                    break;
+            }
+        }while(escolha !=9);
+        
     }
-    public void PIndicadoresQtdSecao(){}
-    public void PIndicadoresSecaoMaiorMenor(){}
-    public void PIndicadoresQtdSecao(){}
-    public void PIndicadoresQtdSecao(){}
+    public static void PIndicadoresQtdSecao()
+        {
+        
+        }
+    public static void PIndicadoresSecaoMaiorMenor()
+        {
+        
+        }
+    public static void PIndicadoresQtdCandidato()
+        {
+        
+        }
+    public static void PIndicadoresRanque()
+        {
+        }
 }
