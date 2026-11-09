@@ -27,7 +27,19 @@ public class metodos {
     
     public Votacao[] FClassificarsecao(Votacao[] vt)
     {
-    
+    Votacao aux = new Votacao();
+    for(int i = 0; i < vt.length-1 ;i++)
+        {
+        for(int j = i+1; j<vt.length;j++)
+            {
+            if (vt[i].numerosecao > vt[j].numerosecao)
+                {
+                aux = vt[i];
+                vt[i] = vt[j];
+                vt[j]= aux;
+                }
+            }
+        }
         return vt;
     }
     
