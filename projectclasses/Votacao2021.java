@@ -1,11 +1,12 @@
 package com.mycompany.projectclasses;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Votacao2021 {
-    public static void main(String args[])
+    public static void main(String args[])throws IOException
     {
     int escolha = 0;
-    Votacao[] votacao = new Votacao[10];
+    Votacao[] votacao = new Votacao[2020];
     metodos metodo_votacao = new metodos();
 
     do{
@@ -35,9 +36,10 @@ public class Votacao2021 {
             break;
         case 3:
             metodo_votacao.FGravarVotacao(votacao);
+            JOptionPane.showMessageDialog(null, "votos gravados");
             break;
         case 4:
-            MenuIndicadores(votacao);
+            MenuIndicadores(votacao, metodo_votacao);
             break;
         case 9:
             JOptionPane.showMessageDialog(null, "Fechando programada");
@@ -50,7 +52,7 @@ public class Votacao2021 {
 
     }
     
-    public static void MenuIndicadores(Votacao[] vt)
+    public static void MenuIndicadores(Votacao[] vt, metodos metodo)
     {
         int escolha = 0;
         do
@@ -71,16 +73,16 @@ public class Votacao2021 {
             switch(escolha)
             {
                 case 1:
-                    PIndicadoresQtdSecao();
+                    PIndicadoresQtdSecao(vt, metodo);
                     break;
                 case 2:
-                    PIndicadoresSecaoMaiorMenor();
+                    PIndicadoresSecaoMaiorMenor(vt, metodo);
                     break;
                 case 3:
-                    PIndicadoresQtdCandidato();
+                    PIndicadoresQtdCandidato(vt, metodo);
                     break;
                 case 4:
-                    PIndicadoresRanque();
+                    PIndicadoresRanque(vt,metodo);
                     break;
                 case 9:
                     break;
@@ -91,19 +93,73 @@ public class Votacao2021 {
         }while(escolha !=9);
         
     }
-    public static void PIndicadoresQtdSecao()
+    public static void PIndicadoresQtdSecao(Votacao[] vt, metodos m)
         {
+        int[] qtdsecao = new int [10];
+        m.FContarSecao(vt, qtdsecao);
+        for(int i = 0; i<qtdsecao.length;i++)
+            {
+            System.out.println("Quantidade de candidados na secao "+(i+1)+": "+qtdsecao[i]);
+            }
+        }
+    public static void PIndicadoresSecaoMaiorMenor(Votacao[] vt,metodos m)
+        {
+        int[] qtdsecao = new int [10];
+        int maiorqtd,maiorsecao, menorqtd,menorsecao;
+        maiorqtd = 0;
+        menorqtd = 0;
+        menorsecao = 0;
+        maiorsecao = 0;
+        m.FContarSecao(vt, qtdsecao);
+        for(int i = 0; i<qtdsecao.length;i++)
+            {
+            if (qtdsecao[i] > maiorqtd)
+                    {
+                        maiorqtd = qtdsecao[i];
+                        maiorsecao=i+1;
+                    }
+            if(qtdsecao[i] < menorqtd || menorsecao == 0)
+                {
+                menorqtd = qtdsecao[i];
+                menorsecao = i+1;
+                }
+            }
+        System.out.println("Secao com maior numero de candidatos:"+maiorsecao+" qtd:"+maiorqtd+"\nSecao com menor numero de candidatos:"+menorsecao+" qtd:"+menorqtd);
         
         }
-    public static void PIndicadoresSecaoMaiorMenor()
+    public static void PIndicadoresQtdCandidato(Votacao[] vt,metodos m)
         {
-        
+        int[] qtdvotos = new int[300];
+        m.FContaVoto(vt, qtdvotos);
+        for(int i = 0; i< qtdvotos.length;i++)
+            {
+            if (qtdvotos[i] != 0)
+                {
+                System.out.println("Candidato "+(i+1)+" recebeu "+qtdvotos[i]+" votos");
+                }
+            }
         }
-    public static void PIndicadoresQtdCandidato()
+    public static void PIndicadoresRanque(Votacao[] vt,metodos m)
         {
+        int[] qtdvotos = new int[300];
+        m.FContaVoto(vt, qtdvotos);
+        int[][] rank = new int[10][2];
         
-        }
-    public static void PIndicadoresRanque()
-        {
+        for(int i = 0; i<qtdvotos.length;i++)
+            {
+            for(int j = 0; j<10; j++)
+                {
+                if (qtdvotos[i]>rank[j][1] || rank[j][0] == 0)
+                    {
+                    rank[j][0] = i+1;
+                    rank[j][1] = qtdvotos[i];
+                    break;
+                    }
+                }
+            }
+        for(int i = 0; i<10;i++)
+            {
+            System.out.println((i+1)+"* lugar: Candidato "+ rank[i][0]+" qtd de votos:"+ rank[i][1]);
+            }
         }
 }
