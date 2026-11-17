@@ -16,7 +16,7 @@ public class metodos {
         return vt;
     }
     
-    public Votacao[] FIniciarLista(Votacao[] vt)
+    private Votacao[] FIniciarLista(Votacao[] vt)
     {
         for(int i = 0; i< vt.length;i++)
         {
@@ -38,13 +38,49 @@ public class metodos {
                 vt[i] = vt[j];
                 vt[j]= aux;
                 }
+            else
+                {
+                    if((vt[i].numerocanditato > vt[j].numerocanditato) & (vt[i].numerosecao == vt[j].numerosecao))
+                    {
+                    aux = vt[i];
+                    vt[i] = vt[j];
+                    vt[j]= aux;
+                    }
+                }
             }
         }
         return vt;
     }
     
-    public void FGravarVotacao(Votacao[] vt)
+    public void FGravarVotacao(Votacao[] vt)throws IOException
     {
+    String filename = "VotaçãoRegistro.txt";
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+    for(int i = 0; i<vt.length;i++)
+        {
+        writer.write(Integer.toString(vt[i].numerosecao));
+        writer.newLine();
+        writer.write(Integer.toString(vt[i].numerocanditato));
+        writer.newLine();
+        }
+    writer.close();
+    }
     
+    public int[] FContarSecao(Votacao[] vt, int[] qtdsecao)
+    {
+        for(int i = 0; i < vt.length;i++)
+            {
+            qtdsecao[vt[i].numerosecao-1]++;
+            }
+        return qtdsecao;
+    }
+    
+    public int[] FContaVoto(Votacao[] vt, int[] qtdvotos)
+    {
+    for(int i = 0; i< vt.length; i++)
+        {
+        qtdvotos[vt[i].numerocanditato-1]++;
+        }
+    return qtdvotos;
     }
 }
